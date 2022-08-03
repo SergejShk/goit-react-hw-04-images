@@ -17,21 +17,18 @@ const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const getData = () => {
+  useEffect(() => {
+    if (searchQuery === '') return;
+
     setIsLoading(true);
+
     getArticles(searchQuery, page)
       .then(data => {
         setSearchData(prev => [...prev, ...data.hits]);
-        setPage(prev => prev + 1);
       })
       .catch(err => setIsError(true))
       .finally(() => setIsLoading(false));
-  };
-
-  useEffect(() => {
-    if (searchQuery === '') return;
-    getData();
-  }, [searchQuery]);
+  }, [searchQuery, page]);
 
   const onSubmitNewSearch = newSearchQuery => {
     setSearchQuery(newSearchQuery);
@@ -41,7 +38,7 @@ const App = () => {
   };
 
   const onLoadMore = () => {
-    getData();
+    setPage(prev => prev + 1);
   };
 
   const onHandleClickImage = data => {
