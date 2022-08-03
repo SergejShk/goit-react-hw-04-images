@@ -47,7 +47,6 @@ const App = () => {
   };
 
   const toogleModal = () => {
-    console.log('object');
     setIsModalOpen(prev => !prev);
   };
 
